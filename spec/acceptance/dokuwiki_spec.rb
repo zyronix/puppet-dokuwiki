@@ -4,7 +4,9 @@ describe 'dokuwiki class' do
   describe 'config' do
     let(:pp) do
       <<-MANIFEST
-        class { 'dokuwiki': }
+        class { 'dokuwiki':
+          wiki_title => 'wiki'
+        }
       MANIFEST
     end
 

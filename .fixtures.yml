@@ -10,4 +10,3 @@ fixtures:
     inifile: puppetlabs/inifile
     zypprepo: puppet/zypprepo
     archive: puppet/archive
-    php: puppet/php

@@ -6,7 +6,6 @@
 1. [Description](#description)
 2. [Setup - The basics of getting started with dokuwiki](#setup)
     * [What dokuwiki affects](#what-dokuwiki-affects)
-    * [Setup requirements](#setup-requirements)
     * [Beginning with dokuwiki](#beginning-with-dokuwiki)
 3. [Usage - Configuration options and additional functionality](#usage)
 4. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
@@ -390,6 +389,8 @@ To help development, please make sure you use PDK for the development of new fea
 Run the acc tests with the follow command:
 ```
 pdk bundle
+pdk bundle exec rake spec_prep
+pdk bundle exec rspec spec/defines/user_spec.rb
 pdk bundle exec rake beaker
 ```
 

@@ -12,7 +12,9 @@
 #     groups       => ['user', 'admin'],
 #   }
 #
-# @param passwordhash The password hash for the user. To generate the hash use the mkpasswd, which is part of the whois package. Generate the password using the following command: 'mkpasswd -m sha-512 -s <<< YourPass'
+# @param passwordhash The password hash for the user. To generate the hash use the mkpasswd, which is part of the whois package. 
+#   Generate the password using the following command: 
+#   ``` mkpasswd -m sha-512 -s <<< YourPass ```
 # @param real_name The real name of the user, used to display the name of the user when pages are edit or created.
 # @param email The e-mail address of the user.
 # @param groups The groups of the user.

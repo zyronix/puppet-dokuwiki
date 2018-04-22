@@ -1,9 +1,16 @@
 require 'spec_helper'
 
 describe 'dokuwiki::acl' do
-  let(:title) { 'namevar' }
+  let(:pre_condition) do
+    "class { 'dokuwiki': wiki_title => 'my_wiki' }"
+  end
+  let(:title) { 'acl' }
   let(:params) do
-    {}
+    {
+      user: '*',
+      group: '@ALL',
+      permission: 8,
+    }
   end
 
   on_supported_os.each do |os, os_facts|
