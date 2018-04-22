@@ -1,10 +1,74 @@
 # dokuwiki::config
 #
-# A description of what this class does
+# Main configuration of dokuwiki
 #
-# @summary A short summary of the purpose of this class
+# @summary Main configuration of dokuwiki
 #
 # @example
-#   include dokuwiki::config
+#   This class should not be called
 class dokuwiki::config {
+  file {"${dokuwiki::install_path}/dokuwiki/conf/local.php":
+    ensure  => file,
+    content => template('dokuwiki/local.php.erb'),
+    mode    => '0644',
+    owner   => $dokuwiki::user,
+    group   => $dokuwiki::group,
+  }
+
+  file {"${dokuwiki::install_path}/dokuwiki/install.php":
+    ensure => absent,
+  }
+
+  if $dokuwiki::useacl == 1 {
+    dokuwiki::user {'adminuser':
+      login        => $dokuwiki::admin_user,
+      passwordhash => $dokuwiki::admin_passwordhash,
+      real_name    => $dokuwiki::admin_real_name,
+      email        => $dokuwiki::admin_email,
+      groups       => $dokuwiki::admin_groups,
+    }
+    if $dokuwiki::default_acl == 'open' {
+      dokuwiki::acl {'all':
+        user       => '*',
+        group      => '@ALL',
+        permission => 8,
+      }
+    } elsif $dokuwiki::default_acl == 'public' {
+      dokuwiki::acl {'all':
+        user       => '*',
+        group      => '@ALL',
+        permission => 1,
+      }
+      dokuwiki::acl {'users':
+        user       => '*',
+        group      => '@user',
+        permission => 8,
+      }
+    }
+  }
+  concat { "${dokuwiki::install_path}/dokuwiki/conf/users.auth.php":
+    ensure => present,
+    owner  => $dokuwiki::user,
+    group  => $dokuwiki::group,
+  }
+
+  concat::fragment { 'dokuwiki_user_header':
+    target  => "${dokuwiki::install_path}/dokuwiki/conf/users.auth.php",
+    content => template('dokuwiki/user_header.erb'),
+    order   => '01'
+  }
+
+  concat {"${dokuwiki::install_path}/dokuwiki/conf/acl.auth.php":
+    ensure  => present,
+    replace => $dokuwiki::replace_acl,
+    owner   => $dokuwiki::user,
+    group   => $dokuwiki::group,
+  }
+
+  concat::fragment { 'dokuwiki_acl_header':
+    target  => "${dokuwiki::install_path}/dokuwiki/conf/acl.auth.php",
+    content => template('dokuwiki/acl_header.erb'),
+    order   => '01'
+  }
+
 }

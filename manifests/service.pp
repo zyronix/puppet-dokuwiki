@@ -1,10 +1,10 @@
 # dokuwiki::service
 #
-# A description of what this class does
+# Configures services required by dokuwiki
 #
-# @summary A short summary of the purpose of this class
+# @summary Configures services required by dokuwiki
 #
 # @example
-#   include dokuwiki::service
+#   This class should not be called
 class dokuwiki::service {
 }

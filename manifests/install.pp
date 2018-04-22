@@ -1,11 +1,11 @@
 # dokuwiki::install
 #
-# A description of what this class does
+# Main installation of dokuwiki
 #
-# @summary A short summary of the purpose of this class
+# @summary Main installation of dokuwiki
 #
 # @example
-#   include dokuwiki::install
+#   This class should not be called
 class dokuwiki::install {
   $manage_webserver = $dokuwiki::manage_webserver
   $manage_php = $dokuwiki::manage_php
@@ -18,19 +18,6 @@ class dokuwiki::install {
     }
   }
 
-  # if $manage_php {
-  #   $fastcgi_socket = 'fcgi://127.0.0.1:9000/$1'
-  #   class { '::php::globals':
-  #     php_version => $dokuwiki::php_version,
-  #     config_root => "/etc/php/${dokuwiki::php_version}",
-  #   }
-  #   -> class {'php':
-  #     dev      => false,
-  #     composer => false,
-  #     pear     => false,
-  #   }
-  # }
-
   if $manage_php and $manage_webserver {
     exec {'disable mpm_event':
       command => 'rm /etc/apache2/mods-enabled/mpm_event.load',
@@ -40,6 +27,10 @@ class dokuwiki::install {
       before  => Class['apache::mod::php']
     }
     class {'apache::mod::php':
+    }
+
+    package {'php7.0-xml':
+      notify => Service['httpd'],
     }
   }
 

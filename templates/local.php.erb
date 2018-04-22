@@ -1,0 +1,13 @@
+<?php
+/**
+ * Dokuwiki's Main Configuration File - Local Settings
+ * Managed by Puppet
+ */
+$conf['title'] = '<%= scope['dokuwiki::title'] %>';
+$conf['lang'] = '<%= scope['dokuwiki::lang'] %>';
+$conf['license'] = '<%= scope['dokuwiki::license'] %>';
+$conf['useacl'] = <%= scope['dokuwiki::useacl'] %>;
+$conf['superuser'] = '<%= scope['dokuwiki::superuser'] %>';
+<%- if scope['dokuwiki::disableactions'] -%>
+$conf['disableactions'] = '<%= scope['dokuwiki::disableactions'] %>';
+<%- end -%>

@@ -1,11 +1,11 @@
 # dokuwiki::params
 #
-# A description of what this class does
+# Default variable logic for dokuwiki
 #
-# @summary A short summary of the purpose of this class
+# @summary Default variable logic for dokuwiki
 #
 # @example
-#   include dokuwiki::params
+#   This class should not be called
 class dokuwiki::params {
   $manage_webserver = true
   $manage_php = true
@@ -25,4 +25,17 @@ class dokuwiki::params {
   $tmp_dir = '/tmp'
   $download_link = 'https://download.dokuwiki.org/src/dokuwiki/dokuwiki-stable.tgz'
   $archive = 'dokuwiki-stable.tgz'
+
+  $lang = 'en'
+  $license = 'cc-by-sa'
+  $useacl = 1
+  $superuser = '@admin'
+  $disableactions = ''
+  $admin_password = ''
+  $admin_user = ''
+  $admin_real_name = ''
+  $admin_email = ''
+  $admin_groups = ['admin', 'user']
+  $default_acl = 'open' # public or closed
+  $replace_acl = false
 }
