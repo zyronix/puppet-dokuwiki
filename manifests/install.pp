@@ -14,19 +14,31 @@ class dokuwiki::install {
     class {'apache':
       mpm_module    => 'prefork',
       default_vhost => false,
+      default_mods  => false,
     }
   }
 
-  if $manage_php {
-    class { '::php::globals':
-      php_version => $dokuwiki::php_version,
-      config_root => "/etc/php/${dokuwiki::php_version}",
-    }
-  -> class {'php':
-    }
-  }
+  # if $manage_php {
+  #   $fastcgi_socket = 'fcgi://127.0.0.1:9000/$1'
+  #   class { '::php::globals':
+  #     php_version => $dokuwiki::php_version,
+  #     config_root => "/etc/php/${dokuwiki::php_version}",
+  #   }
+  #   -> class {'php':
+  #     dev      => false,
+  #     composer => false,
+  #     pear     => false,
+  #   }
+  # }
 
   if $manage_php and $manage_webserver {
+    exec {'disable mpm_event':
+      command => 'rm /etc/apache2/mods-enabled/mpm_event.load',
+      path    => ['/usr/sbin', '/bin'],
+      onlyif  => 'a2query -m mpm_event',
+      require => Package['httpd'],
+      before  => Class['apache::mod::php']
+    }
     class {'apache::mod::php':
     }
   }
@@ -64,7 +76,7 @@ class dokuwiki::install {
   }
   -> file {'/usr/local/bin/symlink':
     ensure  => file,
-    content => template('dokuwiki/symlink.sh.rb'),
+    content => template('dokuwiki/symlink.sh.erb'),
     mode    => '0755'
   }
   -> exec {'/usr/local/bin/symlink':
