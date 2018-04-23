@@ -7,7 +7,7 @@ describe 'dokuwiki::acl' do
   let(:title) { 'acl' }
   let(:params) do
     {
-      user: '*',
+      namespace: '*',
       group: '@ALL',
       permission: 8,
     }

@@ -1,5 +1,14 @@
 # Changelog
 
+## Release 0.2.1
+
+**Features**
+ - None
+**Bugfixes**
+ - If more than one ACL was supplied, only the first was working.
+**Known Issues**
+ - Only runs on Debian / Ubuntu
+
 ## Release 0.2.0
 
 **Features**

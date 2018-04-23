@@ -21,10 +21,10 @@ Currently it is still in development. There is another dokuwiki module on the fo
 This module should: install, manage (config files), secure and offer enough functionality to run dokuwiki in production. 
 
 Limitations: 
-  * Tested and developed for Debian 9 (plans are to support more OSses). 
-  * By default it uses apache as a webserver, but this can be disabled
+  * Tested and developed for Debian 9 (there are plans to support more OSses). 
+  * By default it uses apache as a webserver, but this can be disabled.
 
-If you are missing any feature in this module, please open an issue or write a pull request.
+If you are missing any features in this module, please open an issue or write a pull request.
 
 ## Setup
 ### What dokuwiki affects
@@ -32,6 +32,7 @@ By default dokuwiki affects:
  - Dokuwiki directory
  - Apache service and config
  - PHP Config
+ - Dokuwiki configuration files (local, acl, users)
 
 ### Beginning with dokuwiki
 To install Dokuwiki declare the dokuwiki class:
@@ -42,14 +43,14 @@ class { 'dokuwiki':
 }
 ```
 
- - This will install dokuwiki with the latest tar.gz from the doku wiki website (stable version). 
- - Also it will install apache and php. 
+ - This will install dokuwiki with the latest tar.gz from the dokuwiki website (stable version).
+ - Also it will install apache and php.
  - Create an apache vhost pointing the the extracted dokuwiki folder.
  - Configure dokuwiki to NOT use authentication.
 
 
 ## Usage
-A beter way to use the dokuwiki is of course to secure it more and not use the default completly open schema. For this you can specify the 'default_acl' option. See #reference for more details on this option, but in general a more sure configuration looks like this:
+A beter way to use the dokuwiki is of course to secure it (enable ACLs) and not use the default completly open schema. For this you can specify the 'default_acl' option. See #references for more details on this option, but in general a more secure configuration looks like this:
 
 ```puppet
  class {'dokuwiki':
@@ -60,9 +61,9 @@ A beter way to use the dokuwiki is of course to secure it more and not use the d
  }
 ```
 
-It is not recommanded by dokuwiki to modify the ACLs outside of the dokuwiki webinterface. So, by default this module to not overwrite any acls; it only supplies one on installation.
+It is not recommended by dokuwiki to modify the ACLs outside of the dokuwiki webinterface. So, by default this module does not overwrite any acls; it only supplies one for installation.
 
-To create any additional users: user the dokuwiki::user defined type:
+To create any additional users: use the dokuwiki::user defined type:
 
 ```puppet
    dokuwiki::user { 'admin':
@@ -74,8 +75,6 @@ To create any additional users: user the dokuwiki::user defined type:
 ```
 
 ## Reference
-## Reference
-
 ### Classes
 * [`dokuwiki`](#dokuwiki): This module manages and install dokuwiki.
 * [`dokuwiki::config`](#dokuwikiconfig): Main configuration of dokuwiki
@@ -124,7 +123,9 @@ Default value: $dokuwiki::params::admin_user
 
 Data type: `String`
 
-The password hash of the admin user. To generate the hash use the mkpasswd, which is part of the whois package. Generate the password using the following command: 'mkpasswd -m sha-512 -s <<< YourPass'
+The password hash of the admin user.
+To generate the hash use the mkpasswd, which is part of the whois package.
+Generate the password using the following command: ```mkpasswd -m sha-512 -s <<< YourPass```
 
 Default value: $dokuwiki::params::admin_password
 
@@ -186,7 +187,7 @@ Default value: $dokuwiki::params::license
 
 ###### `useacl`
 
-Data type: `Enum[0, 1]`
+Data type: `Numeric`
 
 If set to 1 the ACL module is enable and the dokuwiki will use the acl.auth.php config file
 
@@ -196,7 +197,8 @@ Default value: $dokuwiki::params::useacl
 
 Data type: `Enum['public', 'open', 'closed']`
 
-Specifiy the default acl. Open means: anyone can edit, Public means: anyone can view; users can edit, Closed means: only users can view and edit
+Specifiy the default acl.
+Open means: anyone can edit, Public means: anyone can view; users can edit, Closed means: only users can view and edit
 
 Default value: $dokuwiki::params::default_acl
 
@@ -204,7 +206,8 @@ Default value: $dokuwiki::params::default_acl
 
 Data type: `Boolean`
 
-If set, this module will replace contents of the ACL, possibly revering changes done in the webinterface. Dokuwiki does not recommend this.
+If set, this module will replace contents of the ACL, possibly revering changes done in the webinterface.
+Dokuwiki does not recommend this.
 
 Default value: $dokuwiki::params::replace_acl
 
@@ -220,7 +223,8 @@ Default value: $dokuwiki::params::superuser
 
 Data type: `String`
 
-This variable can be used to disable specific actions: like registering. See https://www.dokuwiki.org/config:disableactions for more information
+This variable can be used to disable specific actions: like registering.
+See https://www.dokuwiki.org/config:disableactions for more information
 
 Default value: $dokuwiki::params::disableactions
 
@@ -289,7 +293,7 @@ Create ACL rules in the acl.auth.php configuration file
 ###### 
 ```puppet
 dokuwiki::acl { 'acl_line':
-  user       => '*',
+  namespace  => '*',
   group      => '@ALL',
   permission => '8',
 }
@@ -300,23 +304,25 @@ dokuwiki::acl { 'acl_line':
 
 The following parameters are available in the `dokuwiki::acl` defined type.
 
-###### `user`
+###### `namespace`
 
 Data type: `String`
 
-Specify the user for which this ACL rule applies. Use '*' to apply rule to all users.
+Specify the name for which this ACL rule applies. Use '*' to apply rule to all namespaces.
 
 ###### `group`
 
 Data type: `String`
 
-Specify the group for which this ACL rule applies. Start the group name with the '@' sign and use '*' to apply rule to all groups.
+Specify the group for which this ACL rule applies.
+Start the group name with the '@' sign and use '*' to apply rule to all groups.
 
 ###### `permission`
 
 Data type: `Numeric`
 
-Specify the permission for this ACL rule. Possible permissions are: 1 for read, 2 edit, 4 create, 8 upload. See https://www.dokuwiki.org/acl for more information.
+Specify the permission for this ACL rule.
+Possible permissions are: 1 for read, 2 edit, 4 create, 8 upload. See https://www.dokuwiki.org/acl for more information.
 
 
 #### dokuwiki::user
@@ -345,7 +351,9 @@ The following parameters are available in the `dokuwiki::user` defined type.
 
 Data type: `String`
 
-The password hash for the user. To generate the hash use the mkpasswd, which is part of the whois package. Generate the password using the following command: 'mkpasswd -m sha-512 -s <<< YourPass'
+The password hash for the user. To generate the hash use the mkpasswd, which is part of the whois package.
+Generate the password using the following command:
+``` mkpasswd -m sha-512 -s <<< YourPass ```
 
 Default value: ''
 
@@ -393,4 +401,3 @@ pdk bundle exec rake spec_prep
 pdk bundle exec rspec spec/defines/user_spec.rb
 pdk bundle exec rake beaker
 ```
-

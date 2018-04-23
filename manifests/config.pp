@@ -29,18 +29,18 @@ class dokuwiki::config {
     }
     if $dokuwiki::default_acl == 'open' {
       dokuwiki::acl {'all':
-        user       => '*',
+        namespace  => '*',
         group      => '@ALL',
         permission => 8,
       }
     } elsif $dokuwiki::default_acl == 'public' {
       dokuwiki::acl {'all':
-        user       => '*',
+        namespace  => '*',
         group      => '@ALL',
         permission => 1,
       }
       dokuwiki::acl {'users':
-        user       => '*',
+        namespace  => '*',
         group      => '@user',
         permission => 8,
       }
