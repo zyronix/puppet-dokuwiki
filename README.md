@@ -54,10 +54,10 @@ A beter way to use the dokuwiki is of course to secure it (enable ACLs) and not 
 
 ```puppet
  class {'dokuwiki':
-   wiki_title => 'Wiki',
-   admin_user => 'admin',
-   admin_passwordhash => 'dokuwiki$1$4fd0ad31$.cId7p1uxI4a.RcrH81On0', # Which is hashed and salted: admin
-   default_acl => 'public',
+   wiki_title         => 'Wiki',
+   admin_user         => 'admin',
+   admin_passwordhash => '$1$4fd0ad31$.cId7p1uxI4a.RcrH81On0', # Which is hashed and salted: admin
+   default_acl        => 'public',
  }
 ```
 

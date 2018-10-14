@@ -44,6 +44,18 @@ class dokuwiki::config {
         group      => '@user',
         permission => 8,
       }
+    } else {
+      # If any other case (aka: closed)
+      dokuwiki::acl {'all':
+        namespace  => '*',
+        group      => '@ALL',
+        permission => 0,
+      }
+      dokuwiki::acl {'users':
+        namespace  => '*',
+        group      => '@user',
+        permission => 8,
+      }
     }
   }
   concat { "${dokuwiki::install_path}/dokuwiki/conf/users.auth.php":

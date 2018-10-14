@@ -1,5 +1,14 @@
 # Changelog
 
+## Release 0.3.0
+
+**Features**
+ - None
+**Bugfixes**
+ - Closed default ACL was not working
+**Known Issues**
+ - Only runs on Debian / Ubuntu
+
 ## Release 0.2.1
 
 **Features**

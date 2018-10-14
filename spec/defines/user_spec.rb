@@ -10,7 +10,7 @@ describe 'dokuwiki::user' do
       passwordhash: '$1$4fd0ad31$.cId7p1uxI4a.RcrH81On0',
       real_name: 'admin',
       email: 'root@localhost',
-      groups: %w[user admin],
+      groups: ['user', 'admin'],
     }
   end
 
