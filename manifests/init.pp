@@ -19,6 +19,13 @@
 # @param admin_groups An array of group for the admin user.
 # @param manage_webserver If enabled (default), this module will also manages and installs apache
 # @param manage_php If enabled (default), this module also manages and installs php
+# @param enable_ssl If enabled, this module will enable ssl and also a redirect to port 443 from port 80
+# @param servername Default set to the fqdn fact is used for the redirect of port 80 to port 443. 
+#   Make sure this name is resolve able by the clients accessing the server.
+# @param ssl_cert Defaults to the selfsigned snakeoil certificate, but can be used to change
+#   the certificate used by the apache instance
+# @param ssl_key Defaults to the selfsigned snakeoil private key, but can be used to change the
+#   privatekey used by the apache instance
 # @param lang The language of the dokuwiki
 # @param license The default license used for all the content placed on the dokuwiki
 # @param useacl If set to 1 the ACL module is enable and the dokuwiki will use the acl.auth.php config file
@@ -38,6 +45,10 @@ class dokuwiki (
   Array $admin_groups = $dokuwiki::params::admin_groups,
   Boolean $manage_webserver = $dokuwiki::params::manage_webserver,
   Boolean $manage_php = $dokuwiki::params::manage_php,
+  Boolean $enable_ssl = $dokuwiki::params::enable_ssl,
+  String $ssl_cert = $dokuwiki::params::ssl_cert,
+  String $ssl_key = $dokuwiki::params::ssl_key,
+  String $servername = $dokuwiki::params::servername,
   String $lang = $dokuwiki::params::lang,
   String $license = $dokuwiki::params::license,
   Numeric $useacl = $dokuwiki::params::useacl,

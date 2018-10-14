@@ -3,7 +3,7 @@
 ## Release 0.3.0
 
 **Features**
- - None
+ - SSL support
 **Bugfixes**
  - Closed default ACL was not working
 **Known Issues**

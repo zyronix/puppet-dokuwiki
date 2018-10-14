@@ -9,6 +9,8 @@
 class dokuwiki::params {
   $manage_webserver = true
   $manage_php = true
+  $enable_ssl = false
+  $servername = $::fqdn
 
   case $facts['os']['name'] {
     /^(Debian|Ubuntu)$/: {
@@ -16,6 +18,8 @@ class dokuwiki::params {
       $install_path = '/var/www'
       $user = 'www-data'
       $group = 'www-data'
+      $ssl_cert = '/etc/ssl/certs/ssl-cert-snakeoil.pem'
+      $ssl_key = '/etc/ssl/private/ssl-cert-snakeoil.key'
     }
     default: {
       fail('OS not supported')

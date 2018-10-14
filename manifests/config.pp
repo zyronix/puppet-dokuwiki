@@ -7,6 +7,9 @@
 # @example
 #   This class should not be called
 class dokuwiki::config {
+  $manage_webserver = $dokuwiki::manage_webserver
+  $enable_ssl = $dokuwiki::enable_ssl
+
   file {"${dokuwiki::install_path}/dokuwiki/conf/local.php":
     ensure  => file,
     content => template('dokuwiki/local.php.erb'),
@@ -83,4 +86,31 @@ class dokuwiki::config {
     order   => '01'
   }
 
+  if $manage_webserver {
+    if enable_ssl {
+      apache::vhost { 'dokuwiki-ssl':
+        port           => '443',
+        manage_docroot => false,
+        override       => 'All',
+        docroot        => "${dokuwiki::install_path}/dokuwiki",
+        ssl            => true,
+        ssl_cert       => $dokuwiki::ssl_cert,
+        ssl_key        => $dokuwiki::ssl_key,
+      }
+      apache::vhost { 'dokuwiki':
+        port            => '80',
+        manage_docroot  => false,
+        redirect_status => 'permanent',
+        docroot         => "${dokuwiki::install_path}/dokuwiki",
+        redirect_dest   => "https://${dokuwiki::servername}/",
+      }
+    } else {
+      apache::vhost { 'dokuwiki':
+        port           => '80',
+        manage_docroot => false,
+        override       => 'All',
+        docroot        => "${dokuwiki::install_path}/dokuwiki",
+      }
+    }
+  }
 }

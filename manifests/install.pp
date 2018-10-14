@@ -75,12 +75,4 @@ class dokuwiki::install {
     subscribe   => Archive['dokuwiki_tar'],
     refreshonly => true,
   }
-  -> apache::vhost { 'dokuwiki':
-    port           => '80',
-    manage_docroot => false,
-    override       => 'All',
-    docroot        => "${dokuwiki::install_path}/dokuwiki",
-  }
-
-
 }
