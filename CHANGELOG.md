@@ -8,6 +8,7 @@
  - Now also manages the htaccess file
 **Bugfixes**
  - Closed default ACL was not working
+ - Default apache options were insecure
 **Known Issues**
  - Only runs on Debian / Ubuntu
 

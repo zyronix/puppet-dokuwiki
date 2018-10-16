@@ -101,6 +101,7 @@ class dokuwiki::config {
         ssl            => true,
         ssl_cert       => $dokuwiki::ssl_cert,
         ssl_key        => $dokuwiki::ssl_key,
+        options        => ['-Indexes', '-MultiViews' ,'+FollowSymLinks'],
       }
       apache::vhost { 'dokuwiki':
         servername      => $dokuwiki::servername,
@@ -109,6 +110,7 @@ class dokuwiki::config {
         redirect_status => 'permanent',
         docroot         => "${dokuwiki::install_path}/dokuwiki",
         redirect_dest   => "https://${dokuwiki::servername}/",
+        options         => ['-Indexes', '-MultiViews' ,'+FollowSymLinks'],
       }
     } else {
       apache::vhost { 'dokuwiki':
@@ -117,6 +119,7 @@ class dokuwiki::config {
         manage_docroot => false,
         override       => 'All',
         docroot        => "${dokuwiki::install_path}/dokuwiki",
+        options        => ['-Indexes', '-MultiViews' ,'+FollowSymLinks'],
       }
     }
     file {'dokuwiki-htaccess':
