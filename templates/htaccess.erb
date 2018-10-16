@@ -1,0 +1,12 @@
+# Managed by Puppet
+## make sure nobody gets the htaccess, README, COPYING or VERSION files
+<%- if @os['name'] == 'Debian' or @os['name'] == 'Ubuntu' -%>
+<Files ~ "^([\._]ht|README$|VERSION$|COPYING$)">
+    Require all denied
+</Files>
+<%- end -%>
+
+## Don't allow access to git directories
+<IfModule alias_module>
+    RedirectMatch 404 /\.git
+</IfModule>

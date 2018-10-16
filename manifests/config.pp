@@ -10,12 +10,14 @@ class dokuwiki::config {
   $manage_webserver = $dokuwiki::manage_webserver
   $enable_ssl = $dokuwiki::enable_ssl
 
-  file {"${dokuwiki::install_path}/dokuwiki/conf/local.php":
+  file {'dokuwiki-local.php':
     ensure  => file,
+    path    => "${dokuwiki::install_path}/dokuwiki/conf/local.php",
     content => template('dokuwiki/local.php.erb'),
     mode    => '0644',
     owner   => $dokuwiki::user,
     group   => $dokuwiki::group,
+    replace => $dokuwiki::replace_local,
   }
 
   file {"${dokuwiki::install_path}/dokuwiki/install.php":
@@ -61,14 +63,16 @@ class dokuwiki::config {
       }
     }
   }
-  concat { "${dokuwiki::install_path}/dokuwiki/conf/users.auth.php":
-    ensure => present,
-    owner  => $dokuwiki::user,
-    group  => $dokuwiki::group,
+  concat { 'dokuwiki-users.auth.php':
+    ensure  => present,
+    path    => "${dokuwiki::install_path}/dokuwiki/conf/users.auth.php",
+    owner   => $dokuwiki::user,
+    group   => $dokuwiki::group,
+    replace => $dokuwiki::replace_users_auth,
   }
 
   concat::fragment { 'dokuwiki_user_header':
-    target  => "${dokuwiki::install_path}/dokuwiki/conf/users.auth.php",
+    target  => 'dokuwiki-users.auth.php',
     content => template('dokuwiki/user_header.erb'),
     order   => '01'
   }
@@ -89,6 +93,7 @@ class dokuwiki::config {
   if $manage_webserver {
     if enable_ssl {
       apache::vhost { 'dokuwiki-ssl':
+        servername     => $dokuwiki::servername,
         port           => '443',
         manage_docroot => false,
         override       => 'All',
@@ -98,6 +103,7 @@ class dokuwiki::config {
         ssl_key        => $dokuwiki::ssl_key,
       }
       apache::vhost { 'dokuwiki':
+        servername      => $dokuwiki::servername,
         port            => '80',
         manage_docroot  => false,
         redirect_status => 'permanent',
@@ -106,11 +112,21 @@ class dokuwiki::config {
       }
     } else {
       apache::vhost { 'dokuwiki':
+        servername     => $dokuwiki::servername,
         port           => '80',
         manage_docroot => false,
         override       => 'All',
         docroot        => "${dokuwiki::install_path}/dokuwiki",
       }
+    }
+    file {'dokuwiki-htaccess':
+      path    => "${dokuwiki::install_path}/dokuwiki/.htaccess",
+      content => template('dokuwiki/htaccess.erb'),
+      owner   => $dokuwiki::user,
+      group   => $dokuwiki::group,
+    }
+    file {"${dokuwiki::install_path}/dokuwiki/.htaccess.dist":
+      ensure => absent,
     }
   }
 }

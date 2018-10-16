@@ -42,4 +42,6 @@ class dokuwiki::params {
   $admin_groups = ['admin', 'user']
   $default_acl = 'open' # public or closed
   $replace_acl = false
+  $replace_local = false
+  $replace_users_auth = false
 }

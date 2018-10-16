@@ -70,7 +70,7 @@ class dokuwiki::install {
     content => template('dokuwiki/symlink.sh.erb'),
     mode    => '0755'
   }
-  -> exec {'/usr/local/bin/symlink':
+  ~> exec {'/usr/local/bin/symlink':
     creates     => "${dokuwiki::install_path}/dokuwiki",
     subscribe   => Archive['dokuwiki_tar'],
     refreshonly => true,

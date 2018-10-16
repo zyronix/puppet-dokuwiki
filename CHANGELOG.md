@@ -3,7 +3,9 @@
 ## Release 0.3.0
 
 **Features**
- - SSL support
+ - SSL support, either selfsigned or specify the paths for cert and key
+ - Specify if the module should manage the local.php and users.auth.php file
+ - Now also manages the htaccess file
 **Bugfixes**
  - Closed default ACL was not working
 **Known Issues**

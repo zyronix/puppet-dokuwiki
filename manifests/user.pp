@@ -27,7 +27,7 @@ define dokuwiki::user(
   String $login = $name,
 ) {
   concat::fragment { "dokuwiki_user_${login}":
-    target  => "${dokuwiki::install_path}/dokuwiki/conf/users.auth.php",
+    target  => 'dokuwiki-users.auth.php',
     content => template('dokuwiki/user.erb'),
     order   => '10'
   }

@@ -33,6 +33,10 @@
 #   Open means: anyone can edit, Public means: anyone can view; users can edit, Closed means: only users can view and edit
 # @param replace_acl If set, this module will replace contents of the ACL, possibly revering changes done in the webinterface. 
 #   Dokuwiki does not recommend this.
+# @param replace_local If set (default unset), this module will replace contents of the local.php file, possibly reverting 
+#   changes done in the webinterface.
+# @param replace_users_auth If set, this module will replace contents in the users.auth.php file, possibly reverting changes 
+#   done in the webitnerface.
 # @param superuser This variable determines which user or group defines the super admins
 # @param disableactions This variable can be used to disable specific actions: like registering. 
 #   See https://www.dokuwiki.org/config:disableactions for more information
@@ -54,6 +58,8 @@ class dokuwiki (
   Numeric $useacl = $dokuwiki::params::useacl,
   Enum['public', 'open', 'closed'] $default_acl = $dokuwiki::params::default_acl,
   Boolean $replace_acl = $dokuwiki::params::replace_acl,
+  Boolean $replace_local = $dokuwiki::params::replace_local,
+  Boolean $replace_users_auth = $dokuwiki::params::replace_users_auth,
   String $superuser = $dokuwiki::params::superuser,
   String $disableactions = $dokuwiki::params::disableactions,
 ) inherits dokuwiki::params {
