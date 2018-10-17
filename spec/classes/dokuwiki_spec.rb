@@ -34,13 +34,14 @@ describe 'dokuwiki' do
         )
       }
     end
-    context "on #{os} with replace_local enabled and replace_users_auth enabled" do
+    context "on #{os} with replace_local enabled, replace_users_auth enabled and userewrite to 1" do
       let(:facts) { os_facts }
       let(:params) do
         {
           wiki_title: 'my wiki',
           replace_local: true,
           replace_users_auth: true,
+          userewrite: 1,
         }
       end
 
@@ -51,6 +52,8 @@ describe 'dokuwiki' do
         is_expected.to contain_concat('dokuwiki-users.auth.php').with(
           'replace' => true,
         )
+        is_expected.to contain_file('dokuwiki-local.php').with_content(%r{^\$conf\['userewrite'\] = 1$})
+        is_expected.to contain_file('dokuwiki-htaccess').with_content(%r{^RewriteEngine on$})
       }
     end
   end

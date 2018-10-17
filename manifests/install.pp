@@ -32,6 +32,10 @@ class dokuwiki::install {
     package {'php7.0-xml':
       notify => Service['httpd'],
     }
+    if $dokuwiki::userewrite == 1 {
+      class {'apache::mod::rewrite':
+      }
+    }
   }
 
   # Install requirements for archive module

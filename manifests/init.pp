@@ -40,6 +40,7 @@
 # @param superuser This variable determines which user or group defines the super admins
 # @param disableactions This variable can be used to disable specific actions: like registering. 
 #   See https://www.dokuwiki.org/config:disableactions for more information
+# @param userewrite The variable can be used to enable rewrites. Defaults to 0.
 class dokuwiki (
   String $wiki_title,
   String $admin_user = $dokuwiki::params::admin_user,
@@ -55,13 +56,14 @@ class dokuwiki (
   String $servername = $dokuwiki::params::servername,
   String $lang = $dokuwiki::params::lang,
   String $license = $dokuwiki::params::license,
-  Numeric $useacl = $dokuwiki::params::useacl,
+  Integer $useacl = $dokuwiki::params::useacl,
   Enum['public', 'open', 'closed'] $default_acl = $dokuwiki::params::default_acl,
   Boolean $replace_acl = $dokuwiki::params::replace_acl,
   Boolean $replace_local = $dokuwiki::params::replace_local,
   Boolean $replace_users_auth = $dokuwiki::params::replace_users_auth,
   String $superuser = $dokuwiki::params::superuser,
   String $disableactions = $dokuwiki::params::disableactions,
+  Integer[0, 2] $userewrite = $dokuwiki::params::userewrite,
 ) inherits dokuwiki::params {
   class {'dokuwiki::install':}
   -> class {'dokuwiki::config':}

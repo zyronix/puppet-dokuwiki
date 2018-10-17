@@ -6,6 +6,7 @@
  - SSL support, either selfsigned or specify the paths for cert and key
  - Specify if the module should manage the local.php and users.auth.php file
  - Now also manages the htaccess file
+ - Added userewrite option and auto provisioning of the requirements
 **Bugfixes**
  - Closed default ACL was not working
  - Default apache options were insecure

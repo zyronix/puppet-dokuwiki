@@ -44,4 +44,5 @@ class dokuwiki::params {
   $replace_acl = false
   $replace_local = false
   $replace_users_auth = false
+  $userewrite = 0
 }
