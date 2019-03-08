@@ -1,6 +1,6 @@
 {
   "name": "zyronix-dokuwiki",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "author": "zyronix",
   "summary": "This module manages and install dokuwiki.",
   "license": "Apache-2.0",
