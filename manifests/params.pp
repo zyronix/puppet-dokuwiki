@@ -26,7 +26,7 @@ class dokuwiki::params {
     }
   }
 
-  $ssl_ca = undef
+  $ssl_chain = undef
 
   $tmp_dir = '/tmp'
   $download_link = 'https://download.dokuwiki.org/src/dokuwiki/dokuwiki-stable.tgz'

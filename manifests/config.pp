@@ -101,7 +101,7 @@ class dokuwiki::config {
         ssl            => true,
         ssl_cert       => $dokuwiki::ssl_cert,
         ssl_key        => $dokuwiki::ssl_key,
-        ssl_ca         => $dokuwiki::ssl_ca,
+        ssl_chain      => $dokuwiki::ssl_chain,
         options        => ['-Indexes', '-MultiViews' ,'+FollowSymLinks'],
       }
       apache::vhost { 'dokuwiki':

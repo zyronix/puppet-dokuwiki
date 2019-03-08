@@ -1,5 +1,15 @@
 # Changelog
 
+## Release 0.3.2
+
+**Features**
+ - None
+**Bugfixes**
+ - Renamed the ssl_ca to ssl_chain, as it should have been.
+**Known Issues**
+ - Only runs on Debian / Ubuntu
+ - No acceptances tests...
+
 ## Release 0.3.1
 
 **Features**
