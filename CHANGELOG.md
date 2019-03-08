@@ -1,5 +1,14 @@
 # Changelog
 
+## Release 0.3.1
+
+**Features**
+ - Able to specify the ssl_ca option
+**Bugfixes**
+ - None
+**Known Issues**
+ - Only runs on Debian / Ubuntu
+
 ## Release 0.3.0
 
 **Features**
