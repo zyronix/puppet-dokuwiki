@@ -26,6 +26,7 @@
 #   the certificate used by the apache instance
 # @param ssl_key Defaults to the selfsigned snakeoil private key, but can be used to change the
 #   privatekey used by the apache instance
+# @param ssl_ca Defaults to undef, but can be used to specify the cachain that apache will sent.
 # @param lang The language of the dokuwiki
 # @param license The default license used for all the content placed on the dokuwiki
 # @param useacl If set to 1 the ACL module is enable and the dokuwiki will use the acl.auth.php config file
@@ -53,6 +54,7 @@ class dokuwiki (
   Boolean $enable_ssl = $dokuwiki::params::enable_ssl,
   String $ssl_cert = $dokuwiki::params::ssl_cert,
   String $ssl_key = $dokuwiki::params::ssl_key,
+  Optional[String] $ssl_ca = $dokuwiki::params::ssl_ca,
   String $servername = $dokuwiki::params::servername,
   String $lang = $dokuwiki::params::lang,
   String $license = $dokuwiki::params::license,

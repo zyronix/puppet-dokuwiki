@@ -24,13 +24,15 @@ describe 'dokuwiki' do
           enable_ssl: true,
           ssl_cert: '/etc/ssl/test.pem',
           ssl_key: '/etc/ssl/test.key',
+          ssl_ca: '/etc/ssl/ca.pem',
         }
       end
 
       it {
         is_expected.to contain_apache__vhost('dokuwiki-ssl').with(
           'ssl_cert' => '/etc/ssl/test.pem',
-          'ssl_key' => '/etc/ssl/test.key',
+          'ssl_key'  => '/etc/ssl/test.key',
+          'ssl_ca'   => '/etc/ssl/ca.pem',
         )
       }
     end
