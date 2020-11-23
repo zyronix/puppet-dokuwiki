@@ -51,6 +51,7 @@ class dokuwiki (
   Array $admin_groups,
   String $ssl_cert,
   String $ssl_key,
+  Stdblib::Absolutepatch $install_path,
   Optional[String] $ssl_chain,
   String $servername,
   String $lang,
