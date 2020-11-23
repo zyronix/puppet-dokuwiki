@@ -1,0 +1,7 @@
+---
+dokuwiki::php_version: '7.4'
+dokuwiki::install_path: '/var/www'
+dokuwiki::user: 'apache'
+dokuwiki::group: 'apache'
+dokuwiki::ssl_cert: '/etc/ssl/certs/ssl-cert-snakeoil.pem'
+dokuwiki::ssl_key: '/etc/ssl/private/ssl-cert-snakeoil.key'

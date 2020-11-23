@@ -1,0 +1,21 @@
+---
+dokuwiki::manage_webserver: true
+dokuwiki::manage_php: true
+dokuwiki::enable_ssl: false
+dokuwiki::manage_archive_requirements: true
+dokuwiki::servername: "%{facts.networking.fqdn}"
+dokuwiki::ssl_chain: null
+dokuwiki::tmp_dir: '/tmp'
+dokuwiki::download_link: 'https://download.dokuwiki.org/src/dokuwiki/dokuwiki-stable.tgz'
+dokuwiki::archive: 'dokuwiki-stable.tgz'
+dokuwiki::lang: 'en'
+dokuwiki::license: 'cc-by-sa'
+dokuwiki::useacl: 1
+dokuwiki::superuser: '@admin'
+dokuwiki::disableactions: ''
+dokuwiki::admin_groups: ['admin', 'user']
+dokuwiki::default_acl: 'open' # public or closed
+dokuwiki::replace_acl: false
+dokuwiki::replace_local: false
+dokuwiki::replace_users_auth: false
+dokuwiki::userewrite: 0

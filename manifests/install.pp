@@ -19,12 +19,14 @@ class dokuwiki::install {
   }
 
   if $manage_php and $manage_webserver {
-    exec {'disable mpm_event':
-      command => 'rm /etc/apache2/mods-enabled/mpm_event.load',
-      path    => ['/usr/sbin', '/bin'],
-      onlyif  => 'a2query -m mpm_event',
-      require => Package['httpd'],
-      before  => Class['apache::mod::php']
+    if $::facts['os']['family'] == 'Debian' {
+      exec {'disable mpm_event':
+        command => 'rm /etc/apache2/mods-enabled/mpm_event.load',
+        path    => ['/usr/sbin', '/bin'],
+        onlyif  => 'a2query -m mpm_event',
+        require => Package['httpd'],
+        before  => Class['apache::mod::php']
+      }
     }
     class {'apache::mod::php':
     }
@@ -38,17 +40,12 @@ class dokuwiki::install {
     }
   }
 
-  # Install requirements for archive module
-  package { 'curl':
-    ensure => present,
-  }
-
-  package { 'tar':
-    ensure => present,
-  }
-
-  Archive {
-    require  => Package['curl', 'tar'],
+  if $dokuwiki::manage_archive_requirements {
+    # Install requirements for archive module
+    ensure_packages(['curl', 'tar'])
+    Archive {
+      require  => Package['curl', 'tar'],
+    }
   }
 
   file {$dokuwiki::install_path:
@@ -57,6 +54,7 @@ class dokuwiki::install {
     group  => $dokuwiki::group,
   }
 
+  $dokuwiki_symlink_script = '/usr/local/bin/dokuwiki_web_symlink'
   # Install Dokuwiki
   archive {'dokuwiki_tar':
     path         => "${dokuwiki::tmp_dir}/${dokuwiki::archive}",
@@ -67,14 +65,14 @@ class dokuwiki::install {
     cleanup      => false,
     user         => $dokuwiki::user,
     group        => $dokuwiki::group,
-    require      => [Class['apache'], File[$dokuwiki::install_path]],
+    require      => File[$dokuwiki::install_path],
   }
-  -> file {'/usr/local/bin/symlink':
+  -> file {$dokuwiki_symlink_script:
     ensure  => file,
     content => template('dokuwiki/symlink.sh.erb'),
     mode    => '0755'
   }
-  ~> exec {'/usr/local/bin/symlink':
+  ~> exec {$dokuwiki_symlink_script:
     creates     => "${dokuwiki::install_path}/dokuwiki",
     subscribe   => Archive['dokuwiki_tar'],
     refreshonly => true,
