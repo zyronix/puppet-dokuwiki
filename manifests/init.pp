@@ -52,7 +52,7 @@ class dokuwiki (
   String $ssl_cert,
   String $ssl_key,
   Stdlib::Absolutepath $install_path,
-  Stdlib::Absolutepath $tmp_path,
+  Stdlib::Absolutepath $tmp_dir,
   String $archive,
   Stdlib::HTTPUrl $download_link,
   Optional[String] $ssl_chain,
