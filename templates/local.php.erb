@@ -3,7 +3,7 @@
  * Dokuwiki's Main Configuration File - Local Settings
  * Managed by Puppet
  */
-$conf['title'] = '<%= scope['dokuwiki::title'] %>';
+$conf['title'] = '<%= scope['dokuwiki::wiki_title'] %>';
 $conf['lang'] = '<%= scope['dokuwiki::lang'] %>';
 $conf['license'] = '<%= scope['dokuwiki::license'] %>';
 $conf['useacl'] = <%= scope['dokuwiki::useacl'] %>;
