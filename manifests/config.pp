@@ -13,7 +13,7 @@ class dokuwiki::config {
   file {'dokuwiki-local.php':
     ensure  => file,
     path    => "${dokuwiki::install_path}/dokuwiki/conf/local.php",
-    content => template('dokuwiki/local.php.erb'),
+    content => epp('dokuwiki/local.php.epp'),
     mode    => '0644',
     owner   => $dokuwiki::user,
     group   => $dokuwiki::group,

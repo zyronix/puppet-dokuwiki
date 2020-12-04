@@ -42,6 +42,7 @@
 # @param disableactions This variable can be used to disable specific actions: like registering.
 #   See https://www.dokuwiki.org/config:disableactions for more information
 # @param userewrite The variable can be used to enable rewrites. Defaults to 0.
+# @param custom_config Write custom key/value pairs to local.php config
 class dokuwiki (
   String $wiki_title,
   String $admin_user,
@@ -73,6 +74,7 @@ class dokuwiki (
   Boolean $manage_php,
   Boolean $enable_ssl,
   Boolean $manage_archive_requirements,
+  Hash $custom_config = {},
 ) {
   class {'dokuwiki::install':}
   -> class {'dokuwiki::config':}

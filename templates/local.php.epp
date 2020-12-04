@@ -1,0 +1,17 @@
+<?php
+/**
+ * Dokuwiki's Main Configuration File - Local Settings
+ * Managed by Puppet
+ */
+$conf['title'] = '<%= $dokuwiki::wiki_title %>';
+$conf['lang'] = '<%= $dokuwiki::lang %>';
+$conf['license'] = '<%= $dokuwiki::license %>';
+$conf['useacl'] = <%= $dokuwiki::useacl %>;
+$conf['superuser'] = '<%= $dokuwiki::superuser %>';
+<%- if $dokuwiki::disableactions { -%>
+$conf['disableactions'] = '<%= $dokuwiki::disableactions %>';
+<%- } -%>
+$conf['userewrite'] = <%= $dokuwiki::userewrite %>;
+<%- $dokuwiki::custom_config.each |String $key, String $value| { %>
+$conf['<%= $key %>'] = '<%= $value %>';
+<%- } %>
