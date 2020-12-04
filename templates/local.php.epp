@@ -13,5 +13,9 @@ $conf['disableactions'] = '<%= $dokuwiki::disableactions %>';
 <%- } -%>
 $conf['userewrite'] = <%= $dokuwiki::userewrite %>;
 <%- $dokuwiki::custom_config.each |String $key, String $value| { %>
+  <%- if '.' in $key { -%>
+$conf<%- split($key, '[.]').each |String $k| { -%>['<%= $k -%>']<%- } -%> = <%= $value %>
+  <%- else { -%>
 $conf['<%= $key %>'] = '<%= $value %>';
+  <%- } %>
 <%- } %>
