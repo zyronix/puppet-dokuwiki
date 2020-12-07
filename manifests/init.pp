@@ -79,4 +79,5 @@ class dokuwiki (
   class {'dokuwiki::install':}
   -> class {'dokuwiki::config':}
   -> class {'dokuwiki::service':}
+  -> class {'dokuwiki::facts':}
 }

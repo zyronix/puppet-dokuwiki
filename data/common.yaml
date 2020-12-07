@@ -19,3 +19,4 @@ dokuwiki::replace_acl: false
 dokuwiki::replace_local: false
 dokuwiki::replace_users_auth: false
 dokuwiki::userewrite: 0
+dokuwiki::facts::base_path: /var/lib/dokuwiki
