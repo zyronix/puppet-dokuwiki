@@ -1,10 +1,12 @@
 Facter.add(:dokuwiki_install_path) do
   confine :kernel => 'Linux'
   setcode do
-    Facter::Util::FileHelper::safe_read('/var/lib/dokuwiki/install_path').chomp!
+    f = '/var/lib/dokuwiki/install_path'
+    if File.exist? f
+      File.read f
     end
+  end
 end
-
 Facter.add(:dokuwiki_plugins) do
   confine :kernel => 'Linux'
   setcode do
