@@ -12,7 +12,7 @@ $conf['superuser'] = '<%= $dokuwiki::superuser %>';
 $conf['disableactions'] = '<%= $dokuwiki::disableactions %>';
 <%- } -%>
 $conf['userewrite'] = <%= $dokuwiki::userewrite %>;
-<%- $dokuwiki::custom_config.each |String $key, String $value| { %>
+<%- $dokuwiki::custom_config.each |String $key, Variant[String, Integer] $value| { %>
   <%- if '.' in $key { -%>
 $conf<%- split($key, '[.]').each |String $k| { -%>['<%= $k -%>']<%- } -%> = <%= $value %>
   <%- } else { -%>
