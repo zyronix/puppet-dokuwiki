@@ -4,6 +4,8 @@ Facter.add(:dokuwiki_install_path) do
     f = '/var/lib/dokuwiki/install_path'
     if File.exist? f
       File.read f
+    else
+      nil
     end
   end
 end
