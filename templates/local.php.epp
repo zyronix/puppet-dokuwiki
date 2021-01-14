@@ -17,6 +17,6 @@ $conf['userewrite'] = <%= $dokuwiki::userewrite %>;
   <%- if '.' in $key { -%>
 $conf<%- split($key, '[.]').each |String $k| { %>['<%= $k -%>']<% } %> = <%= "${sep}${value}${sep}" -%>;
   <%- } else { -%>
-$conf['<%= $key %>'] = '<%= $value %>';
-  <%- } %>
-<%- } %>
+$conf['<%= $key %>'] = '<%= $value -%>';
+  <%- } -%>
+<%- } -%>
